@@ -306,8 +306,8 @@ class PoolCollector:
     def __init__(self, pve):
         self._pve = pve
 
-    def collect(self):
-        pools = [entry for entry in self._pve.pools.get()]
+    def collect(self): # pylint: disable=missing-docstring
+        pools = self._pve.pools.get()
 
         labels = ['poolid']
 
