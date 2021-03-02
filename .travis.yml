@@ -12,9 +12,9 @@ cache:
     - $HOME/.cache/pip
 env:
   global:
-    - IMAGE_NAME: prompve/prometheus-pve-exporter
+    - IMAGE_NAME: evit15/prometheus-pve-exporter
     - IMAGE_BUILD_ID: "travis-build-${TRAVIS_BUILD_ID}"
-    - DOCKER_USERNAME: prompveci
+    - DOCKER_USERNAME: evit15
     # travis encrypt DOCKER_PASSWORD=abcdefg[...]
     - secure: "UL0vSTw+8nKj1+a+5k2urlBdQCfrDYbWDWrEcIUN42c8m44OSKgUO2LLDlnJMVIrEdgOuY9pxaNjhkRRDSP8+RFDCwX2N355610qONcBAcUhZZbVXCU9aR29Lhnm1LZq13LDgs+05P9vQ9Aye2MSTKjsEPj1Rrx97GUNFUBfKbqhiV5e/++MLYHtcjsPSLjgBAfA80Tme/FwGbvBzL64OLUl1rmXnaUlAQ60FCag078RS8LlsMNZFEU11f1+DWxl9VdYdH83AzKN/t/xY2+qJu0eUksOvxFM19jMIrC9+KWzvSio3GpbPlA1R/eqpE8iWHx3Zo0tyeVllraYsxX4Wyn7XUqYVzw/5DmXA6gHYtgayrjDk6oA2qpsMmg9w+Q4fhQz7AJjLgNd/vXHwUBByzdgPfjT98zzUUwi2784o6e/+B7bZ3EeLSgrL0VuootmI4LTvlPjwFlWBKij9cQGSzSMiGomr7RcmZGPU9gFyA/EYkglxFV0sSMJgEOBi4Lostc8rEXThKF4eDcDQo7GdI4QvQ+0tQLzsbDAg17pm14+1b9WwqrwTCW1wCgR0T8VwH7wFvaiGnLbFuIWDT5KK4nSq9YOwYB+eLnO85N58ideqrM3o6FKnHqwscVzN4uIUMtCUgGgzS/gP+N7DMjN/OM2lkPIg4/fY45+5bEYhKI="
 stages:
