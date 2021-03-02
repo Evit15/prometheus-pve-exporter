@@ -17,6 +17,7 @@ CollectorsOptions = collections.namedtuple('CollectorsOptions', [
     'cluster',
     'resources',
     'config',
+    'pool'
 ])
 
 class StatusCollector:
@@ -216,7 +217,7 @@ class ClusterResourcesCollector:
             'guest': GaugeMetricFamily(
                 'pve_guest_info',
                 'VM/CT info',
-                labels=['id', 'node', 'name', 'type']),
+                labels=['id', 'node', 'name', 'type', 'pool']),
             'storage': GaugeMetricFamily(
                 'pve_storage_info',
                 'Storage info',
@@ -225,11 +226,11 @@ class ClusterResourcesCollector:
 
         info_lookup = {
             'lxc': {
-                'labels': ['id', 'node', 'name', 'type'],
+                'labels': ['id', 'node', 'name', 'type', 'pool'],
                 'gauge': info_metrics['guest'],
             },
             'qemu': {
-                'labels': ['id', 'node', 'name', 'type'],
+                'labels': ['id', 'node', 'name', 'type', 'pool'],
                 'gauge': info_metrics['guest'],
             },
             'storage': {
@@ -294,6 +295,27 @@ class ClusterNodeConfigCollector:
 
         return metrics.values()
 
+class PoolCollector:
+    def __init__(self, pve):
+        self._pve = pve
+
+    def collect(self):
+        pools = [entry for entry in self._pve.pools.get()]
+
+        labels = ['poolid']
+
+        if pools:
+            info_metrics = GaugeMetricFamily(
+                'pve_pool_info',
+                'Pool info',
+                labels=labels)
+
+            for pool in pools:
+                label_values = [str(pool[key]) for key in labels]
+                info_metrics.add_metric(label_values, 1)
+
+            yield info_metrics
+
 def collect_pve(config, host, options: CollectorsOptions):
     """Scrape a host and return prometheus text format for it"""
 
@@ -312,5 +334,6 @@ def collect_pve(config, host, options: CollectorsOptions):
         registry.register(ClusterNodeConfigCollector(pve))
     if options.version:
         registry.register(VersionCollector(pve))
-
+    if options.pool:
+        registry.register(PoolCollector(pve))
     return generate_latest(registry)
