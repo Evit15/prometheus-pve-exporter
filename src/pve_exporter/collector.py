@@ -296,6 +296,13 @@ class ClusterNodeConfigCollector:
         return metrics.values()
 
 class PoolCollector:
+    """
+    Collects Proxmox VE pool information. E.g.:
+
+    # HELP pve_pool_info pool info
+    # TYPE pve_pool_info gauge
+    pve_pool_info{poolid="pool"} 1.0
+    """
     def __init__(self, pve):
         self._pve = pve
 
